@@ -10,15 +10,9 @@ app = FastAPI(
 )
 
 # CORS設定
-print("=" * 80)
-print(f"CORS_ORIGINS environment variable: {settings.CORS_ORIGINS}")
-print(f"Parsed CORS origins list: {settings.cors_origins_list}")
-print("DEBUG: Allowing ALL origins (*) to diagnose CORS issue")
-print("=" * 80)
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # デバッグ用: 一時的にすべてのオリジンを許可
+    allow_origins=settings.cors_origins_list,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

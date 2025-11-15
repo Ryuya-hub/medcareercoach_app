@@ -11,7 +11,6 @@ os.environ.setdefault('PYTHONIOENCODING', 'utf-8')
 
 # DATABASE_URLをパースしてエンコーディングの問題を回避
 database_url = settings.DATABASE_URL
-print(f"[DEBUG] Original DATABASE_URL length: {len(database_url)} bytes")
 
 # PostgreSQL接続時にクライアントエンコーディングをUTF-8に設定
 # pool_recycle: 接続を1時間ごとにリサイクル（エンコーディング問題の回避）
