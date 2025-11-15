@@ -99,6 +99,19 @@ async def create_application(
         if not client:
             raise HTTPException(status_code=404, detail="Client not found")
         application_data.client_id = client.client_id
+    elif current_user.user_type in ["coach", "super_admin"]:
+        # コーチまたは管理者の場合は、リクエストボディからclient_idを取得
+        if not application_data.client_id:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="client_id is required for coach or admin users"
+            )
+        # client_idが有効か確認
+        client = db.query(Client).filter(Client.client_id == application_data.client_id).first()
+        if not client:
+            raise HTTPException(status_code=404, detail="Client not found")
+    else:
+        raise HTTPException(status_code=403, detail="Invalid user type")
 
     application = Application(**application_data.dict())
     db.add(application)
