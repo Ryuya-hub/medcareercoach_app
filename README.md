@@ -270,6 +270,12 @@ MIT License
   新規登録:
   - 利用者登録: http://localhost:3000/register
   - 管理者登録: http://localhost:3000/register/coach（招待コード: COACH2025SECURE）
+  - 
+  https://medcareercoach-app.netlify.app/admin/dashboard
+アカウント管理
+
+https://medcareercoach-app.netlify.app/login
+ログイン画面
 
   現在の状況
 
