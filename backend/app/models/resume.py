@@ -32,6 +32,10 @@ class Resume(Base):
     # Relationships
     client = relationship("Client", back_populates="resumes")
     reviews = relationship("ResumeReview", back_populates="resume", cascade="all, delete-orphan")
+    work_experiences = relationship("WorkExperience", back_populates="resume", cascade="all, delete-orphan")
+    education_history = relationship("EducationHistory", back_populates="resume", cascade="all, delete-orphan")
+    certifications = relationship("Certification", back_populates="resume", cascade="all, delete-orphan")
+    skills = relationship("Skill", back_populates="resume", cascade="all, delete-orphan")
 
 
 class WorkExperience(Base):
