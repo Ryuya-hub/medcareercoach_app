@@ -277,6 +277,13 @@ MIT License
 https://medcareercoach-app.netlify.app/login
 ログイン画面
 
+https://medcareercoach-app.netlify.app/admin/dashboard
+アカウント管理
+
+https://medcareercoach-app.netlify.app/login
+ログイン画面
+
+
   現在の状況
 
   - ✓ バックエンド: http://localhost:8000 で起動中
