@@ -10,7 +10,14 @@
       "destination": "/index.html"
     }
   ],
+  "routes": [
+    {
+      "src": "/[^.]+",
+      "dest": "/",
+      "status": 200
+    }
+  ],
   "env": {
-    "VITE_API_URL": ""
+    "VITE_API_URL": "https://medcareercoach-backend.onrender.com"
   }
 }
