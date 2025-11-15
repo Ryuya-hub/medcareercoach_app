@@ -12,5 +12,5 @@ alembic==1.13.1
 supabase==2.3.4
 weasyprint==60.2
 reportlab==4.0.9
-Pillow==10.2.0
+Pillow==10.4.0
 email-validator==2.1.0
