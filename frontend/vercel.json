@@ -17,6 +17,8 @@
       "status": 200
     }
   ],
+  "cleanUrls": true,
+  "trailingSlash": false,
   "env": {
     "VITE_API_URL": "https://medcareercoach-backend.onrender.com"
   }
