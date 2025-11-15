@@ -25,6 +25,7 @@ def main():
             "../database/migration_add_application_fields.sql",
             "../database/migration_update_name_phone_fields.sql",
             "../database/migration_remove_coach_id_from_clients.sql",
+            "../database/migration_add_super_admin_role.sql",
         ]
 
         # 各マイグレーションファイルを実行

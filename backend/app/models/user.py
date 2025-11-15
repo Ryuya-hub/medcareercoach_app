@@ -23,6 +23,8 @@ class UserAuth(Base):
     email = Column(String(255), unique=True, nullable=False, index=True)
     password_hash = Column(String(255), nullable=False)
     user_type = Column(String(20), nullable=False, index=True)  # 'coach' or 'client'
+    role = Column(String(20), nullable=False, index=True)  # 'super_admin', 'coach', or 'client'
+    status = Column(String(20), nullable=False, default='active', index=True)  # 'active', 'inactive', 'suspended'
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
 

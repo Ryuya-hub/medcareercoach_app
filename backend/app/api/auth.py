@@ -23,10 +23,17 @@ async def login(request: LoginRequest, db: Session = Depends(get_db)):
             headers={"WWW-Authenticate": "Bearer"},
         )
 
+    # アカウントステータスチェック
+    if user.status != 'active':
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=f"Account is {user.status}",
+        )
+
     # JWTトークンの生成
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub": str(user.user_id), "user_type": user.user_type},
+        data={"sub": str(user.user_id), "user_type": user.user_type, "role": user.role},
         expires_delta=access_token_expires
     )
 
@@ -34,7 +41,8 @@ async def login(request: LoginRequest, db: Session = Depends(get_db)):
         access_token=access_token,
         token_type="bearer",
         user_type=user.user_type,
-        user_id=str(user.user_id)
+        user_id=str(user.user_id),
+        role=user.role
     )
 
 
@@ -60,7 +68,9 @@ async def register(request: RegisterRequest, db: Session = Depends(get_db)):
     user_auth = UserAuth(
         email=request.email,
         password_hash=get_password_hash(request.password),
-        user_type=request.user_type
+        user_type=request.user_type,
+        role=request.user_type,  # デフォルトはuser_typeと同じ
+        status='active'
     )
     db.add(user_auth)
     db.flush()
@@ -91,7 +101,7 @@ async def register(request: RegisterRequest, db: Session = Depends(get_db)):
     # JWTトークンの生成
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub": str(user_auth.user_id), "user_type": user_auth.user_type},
+        data={"sub": str(user_auth.user_id), "user_type": user_auth.user_type, "role": user_auth.role},
         expires_delta=access_token_expires
     )
 
@@ -99,7 +109,8 @@ async def register(request: RegisterRequest, db: Session = Depends(get_db)):
         access_token=access_token,
         token_type="bearer",
         user_type=user_auth.user_type,
-        user_id=str(user_auth.user_id)
+        user_id=str(user_auth.user_id),
+        role=user_auth.role
     )
 
 
@@ -118,7 +129,9 @@ async def register_client(request: ClientRegisterRequest, db: Session = Depends(
     user_auth = UserAuth(
         email=request.email,
         password_hash=get_password_hash(request.password),
-        user_type='client'
+        user_type='client',
+        role='client',
+        status='active'
     )
     db.add(user_auth)
     db.flush()
@@ -139,7 +152,7 @@ async def register_client(request: ClientRegisterRequest, db: Session = Depends(
     # JWTトークンの生成
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub": str(user_auth.user_id), "user_type": user_auth.user_type},
+        data={"sub": str(user_auth.user_id), "user_type": user_auth.user_type, "role": user_auth.role},
         expires_delta=access_token_expires
     )
 
@@ -147,7 +160,8 @@ async def register_client(request: ClientRegisterRequest, db: Session = Depends(
         access_token=access_token,
         token_type="bearer",
         user_type=user_auth.user_type,
-        user_id=str(user_auth.user_id)
+        user_id=str(user_auth.user_id),
+        role=user_auth.role
     )
 
 
@@ -173,7 +187,9 @@ async def register_coach(request: CoachRegisterRequest, db: Session = Depends(ge
     user_auth = UserAuth(
         email=request.email,
         password_hash=get_password_hash(request.password),
-        user_type='coach'
+        user_type='coach',
+        role='coach',
+        status='active'
     )
     db.add(user_auth)
     db.flush()
@@ -193,7 +209,7 @@ async def register_coach(request: CoachRegisterRequest, db: Session = Depends(ge
     # JWTトークンの生成
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub": str(user_auth.user_id), "user_type": user_auth.user_type},
+        data={"sub": str(user_auth.user_id), "user_type": user_auth.user_type, "role": user_auth.role},
         expires_delta=access_token_expires
     )
 
@@ -201,7 +217,8 @@ async def register_coach(request: CoachRegisterRequest, db: Session = Depends(ge
         access_token=access_token,
         token_type="bearer",
         user_type=user_auth.user_type,
-        user_id=str(user_auth.user_id)
+        user_id=str(user_auth.user_id),
+        role=user_auth.role
     )
 
 

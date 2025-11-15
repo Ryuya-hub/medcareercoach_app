@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
-from app.api import auth, clients, applications, appointments, resumes, coaches
+from app.api import auth, clients, applications, appointments, resumes, coaches, admin
 
 app = FastAPI(
     title="転職支援顧客管理システム API",
@@ -20,6 +20,7 @@ app.add_middleware(
 
 # ルーターの登録
 app.include_router(auth.router)
+app.include_router(admin.router)  # 統括管理者用API
 app.include_router(coaches.router)
 app.include_router(clients.router)
 app.include_router(applications.router)

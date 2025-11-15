@@ -26,10 +26,10 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const response = await authAPI.login({ email, password });
-      const { access_token, user_type, user_id } = response.data;
+      const { access_token, user_type, user_id, role } = response.data;
 
       localStorage.setItem('access_token', access_token);
-      const userData = { user_id, email, user_type };
+      const userData = { user_id, email, user_type, role };
       localStorage.setItem('user', JSON.stringify(userData));
       setUser(userData);
 
@@ -44,10 +44,10 @@ export const AuthProvider = ({ children }) => {
   const register = async (data) => {
     try {
       const response = await authAPI.register(data);
-      const { access_token, user_type, user_id } = response.data;
+      const { access_token, user_type, user_id, role } = response.data;
 
       localStorage.setItem('access_token', access_token);
-      const userData = { user_id, email: data.email, user_type };
+      const userData = { user_id, email: data.email, user_type, role };
       localStorage.setItem('user', JSON.stringify(userData));
       setUser(userData);
 
@@ -75,6 +75,7 @@ export const AuthProvider = ({ children }) => {
     isAuthenticated: !!user,
     isCoach: user?.user_type === 'coach',
     isClient: user?.user_type === 'client',
+    isSuperAdmin: user?.role === 'super_admin',
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -8,6 +8,7 @@ class Token(BaseModel):
     token_type: str
     user_type: str
     user_id: str
+    role: str  # 'super_admin', 'coach', or 'client'
 
 
 class TokenData(BaseModel):

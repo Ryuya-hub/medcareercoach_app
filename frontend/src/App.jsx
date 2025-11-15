@@ -16,6 +16,7 @@ import ResumeReview from './pages/coach/ResumeReview';
 import ClientProfile from './pages/client/Profile';
 import CoachProfile from './pages/coach/Profile';
 import AvailabilityManagement from './pages/coach/AvailabilityManagement';
+import AdminDashboard from './pages/AdminDashboard';
 
 // ProtectedRoute component
 const ProtectedRoute = ({ children, requiredRole }) => {
@@ -55,11 +56,23 @@ function AppRoutes() {
         path="/"
         element={
           <ProtectedRoute>
-            {user?.user_type === 'coach' ? (
+            {user?.role === 'super_admin' ? (
+              <Navigate to="/admin/dashboard" replace />
+            ) : user?.user_type === 'coach' ? (
               <Navigate to="/coach/dashboard" replace />
             ) : (
               <Navigate to="/client/dashboard" replace />
             )}
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Admin routes */}
+      <Route
+        path="/admin/dashboard"
+        element={
+          <ProtectedRoute>
+            <AdminDashboard />
           </ProtectedRoute>
         }
       />
