@@ -1,0 +1,15 @@
+{
+  "name": "medcareercoach-root",
+  "version": "1.0.0",
+  "description": "Root manager for MedCareerCoach",
+  "scripts": {
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "backend": "cd backend && venv\\Scripts\\activate && uvicorn app.main:app --reload --host 0.0.0.0 --port 8000",
+    "frontend": "cd frontend && npm run dev",
+    "db:init": "cd backend && venv\\Scripts\\activate && python init_db.py",
+    "db:migrate": "cd backend && venv\\Scripts\\activate && python run_migrations.py"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
